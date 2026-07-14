@@ -1,0 +1,195 @@
+.purchasers-table__wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+
+.purchasers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.purchasers-table th {
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.purchasers-table th:last-child {
+  width: 40px;
+}
+
+.purchasers-table td {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+  color: var(--text-primary);
+}
+
+.purchasers-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.purchasers-table__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.purchasers-table__pagination-info {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.purchasers-table__pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.purchasers-table__pagination-pages {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.purchasers-table__pagination-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 13px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.purchasers-table__pagination-btn:hover:not(:disabled) {
+  background: var(--purple-muted);
+  border-color: var(--purple);
+}
+
+.purchasers-table__pagination-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.purchasers-table__name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.purchasers-table__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--purple);
+  flex-shrink: 0;
+}
+
+.purchasers-table__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--purple);
+  transition: background 0.15s;
+}
+
+.purchasers-table__menu-btn:hover {
+  background: var(--purple-muted);
+}
+
+.purchasers-table__actions {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.purchasers-table__dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  min-width: 148px;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.purchasers-table__dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.15s;
+}
+
+.purchasers-table__dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.purchasers-table__dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.purchasers-table__dropdown-item--delete {
+  color: var(--delete-text);
+}
+
+.purchasers-table__dropdown-item--delete:hover {
+  background: rgba(224, 122, 95, 0.1);
+}
+
+@media (max-width: 900px) {
+  .purchasers-table__wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-md);
+  }
+
+  .purchasers-table {
+    min-width: 640px;
+  }
+
+  .purchasers-table th,
+  .purchasers-table td {
+    padding: 10px 14px;
+  }
+
+  .purchasers-table__pagination {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 14px;
+  }
+
+  .purchasers-table__pagination-controls {
+    justify-content: space-between;
+  }
+
+  .purchasers-table__pagination-btn {
+    min-height: 44px;
+    flex: 1;
+  }
+}

@@ -1,0 +1,227 @@
+.bulk-sms-form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px 20px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.bulk-sms-form-card__intro {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 14px;
+}
+
+.bulk-sms-form-card__intro h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bulk-sms-form-card__intro p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.bulk-sms-form__alert {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+.bulk-sms-form__alert--success {
+  background: rgba(61, 214, 140, 0.12);
+  color: #3dd68c;
+  border: 1px solid rgba(61, 214, 140, 0.25);
+}
+
+.bulk-sms-form__alert--error {
+  background: rgba(245, 101, 101, 0.12);
+  color: #f56565;
+  border: 1px solid rgba(245, 101, 101, 0.25);
+}
+
+.bulk-sms-form__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bulk-sms-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bulk-sms-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bulk-sms-form__field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.bulk-sms-form__field input[type='text'],
+.bulk-sms-form__field textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.45;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  overflow-wrap: anywhere;
+}
+
+.bulk-sms-form__field input[type='text']:focus,
+.bulk-sms-form__field textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px var(--purple-muted);
+}
+
+.bulk-sms-form__field textarea {
+  min-height: 72px;
+}
+
+.bulk-sms-form__field textarea.bulk-sms-form__textarea--phones {
+  min-height: 64px;
+}
+
+.bulk-sms-form__hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.bulk-sms-form__hint code {
+  font-size: 11px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.bulk-sms-form__hint--count {
+  color: var(--text-muted);
+}
+
+.bulk-sms-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.bulk-sms-form__btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  transition: background 0.15s;
+}
+
+.bulk-sms-form__btn--secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.bulk-sms-form__btn--secondary:hover {
+  background: var(--border);
+}
+
+.bulk-sms-form__btn--primary {
+  background: var(--purple-send);
+  color: white;
+}
+
+.bulk-sms-form__btn--primary:hover {
+  background: var(--purple-send-hover);
+}
+
+@media (max-width: 768px) {
+  .bulk-sms-form-card {
+    padding: 14px 16px 18px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .bulk-sms-form-card__intro {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .bulk-sms-form {
+    gap: 12px;
+  }
+
+  .bulk-sms-form__field input[type='text'],
+  .bulk-sms-form__field textarea {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .bulk-sms-form__field textarea {
+    min-height: 80px;
+  }
+
+  .bulk-sms-form__field textarea.bulk-sms-form__textarea--phones {
+    min-height: 72px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bulk-sms-form-card {
+    padding: 12px 12px 16px;
+  }
+
+  .bulk-sms-form-card__intro h2 {
+    font-size: 15px;
+  }
+
+  .bulk-sms-form-card__intro p {
+    font-size: 12px;
+  }
+
+  .bulk-sms-form__actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+    padding-top: 2px;
+  }
+
+  .bulk-sms-form__btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bulk-sms-form-card {
+    padding: 10px 10px 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  .bulk-sms-form__hint {
+    font-size: 11px;
+  }
+}

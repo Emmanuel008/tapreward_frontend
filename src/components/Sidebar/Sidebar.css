@@ -1,0 +1,245 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 24px;
+}
+
+.sidebar__brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.sidebar__divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sidebar__nav-item {
+  display: contents;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 24px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__link-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar__link-label-short {
+  display: none;
+}
+
+.sidebar__link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar__link--active {
+  background: var(--purple-active-bg);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.sidebar__footer {
+  padding: 20px 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sidebar__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.sidebar__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sidebar__user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sidebar__user-email {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar__logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__logout-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__logout:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: stretch;
+    z-index: 40;
+    border-top: 1px solid var(--border-subtle);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .sidebar__brand,
+  .sidebar__divider--brand,
+  .sidebar__divider--nav,
+  .sidebar__user {
+    display: none;
+  }
+
+  .sidebar__nav {
+    flex: 1;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .sidebar__nav-item {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sidebar__link {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px 10px;
+    font-size: 11px;
+    text-align: center;
+    min-height: 56px;
+  }
+
+  .sidebar__link-icon {
+    display: flex;
+  }
+
+  .sidebar__link-label {
+    display: none;
+  }
+
+  .sidebar__link-label-short {
+    display: block;
+    line-height: 1.2;
+  }
+
+  .sidebar__footer {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    border-top: none;
+    border-left: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .sidebar__logout {
+    width: 56px;
+    min-height: 56px;
+    padding: 8px;
+    border: none;
+    border-radius: 0;
+  }
+
+  .sidebar__logout-label {
+    display: none;
+  }
+
+  .sidebar__logout-icon {
+    display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .sidebar__link-label-short {
+    font-size: 10px;
+  }
+}

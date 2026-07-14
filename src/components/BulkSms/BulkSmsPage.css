@@ -1,0 +1,7 @@
+.bulk-sms-page {
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}

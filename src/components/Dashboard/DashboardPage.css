@@ -1,0 +1,31 @@
+.dashboard-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.dashboard-page__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.dashboard-page__loading {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-page__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dashboard-page__stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

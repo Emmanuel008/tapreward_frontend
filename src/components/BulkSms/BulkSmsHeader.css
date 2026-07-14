@@ -1,0 +1,189 @@
+.bulk-sms-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin: -8px -36px 24px;
+  padding: 8px 36px 16px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  .bulk-sms-header {
+    background: rgba(10, 11, 20, 0.92);
+    backdrop-filter: blur(8px);
+  }
+}
+
+.bulk-sms-header__title {
+  min-width: 0;
+  flex: 1;
+}
+
+.bulk-sms-header__title h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.bulk-sms-header__title p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.bulk-sms-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.bulk-sms-header__search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+}
+
+.bulk-sms-header__search-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.bulk-sms-header__profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.bulk-sms-header__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.bulk-sms-header__profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bulk-sms-header__profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bulk-sms-header__profile-email {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .bulk-sms-header {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bulk-sms-header {
+    flex-direction: row;
+    align-items: center;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .bulk-sms-header__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .bulk-sms-header__title h1 {
+    font-size: 22px;
+    margin-bottom: 0;
+  }
+
+  .bulk-sms-header__title p {
+    display: none;
+  }
+
+  .bulk-sms-header__actions {
+    width: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .bulk-sms-header__search-btn {
+    display: none;
+  }
+
+  .bulk-sms-header__profile {
+    padding: 0;
+    border: none;
+    background: transparent;
+    flex: none;
+    max-width: none;
+  }
+
+  .bulk-sms-header__profile-info {
+    display: none;
+  }
+
+  .bulk-sms-header__avatar {
+    width: 40px;
+    height: 40px;
+    background: #e8eaed;
+    color: #1a1a2e;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bulk-sms-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .bulk-sms-header__title h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bulk-sms-header__title p {
+    display: none;
+  }
+}

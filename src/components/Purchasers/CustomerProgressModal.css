@@ -1,0 +1,248 @@
+.customer-progress-modal {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: modalSlideIn 0.25s ease;
+}
+
+.customer-progress-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--purple);
+}
+
+.customer-progress-modal__header-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.customer-progress-modal__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: white;
+  flex-shrink: 0;
+}
+
+.customer-progress-modal__header h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.customer-progress-modal__header p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.customer-progress-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.15s, color 0.15s;
+}
+
+.customer-progress-modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.customer-progress-modal__body {
+  padding: 8px 24px;
+}
+
+.customer-progress-modal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.customer-progress-modal__row:last-child {
+  border-bottom: none;
+}
+
+.customer-progress-modal__label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.customer-progress-modal__value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.customer-progress-modal__stamps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customer-progress-modal__stamp {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.customer-progress-modal__stamp--filled {
+  border-color: var(--purple);
+  background: var(--purple);
+}
+
+.customer-progress-modal__alert {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.customer-progress-modal__alert--success {
+  background: rgba(61, 214, 140, 0.12);
+  color: #3dd68c;
+}
+
+.customer-progress-modal__alert--error {
+  background: rgba(245, 101, 101, 0.12);
+  color: #f56565;
+}
+
+.customer-progress-modal__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.customer-progress-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 24px 24px;
+}
+
+.customer-progress-modal__footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.customer-progress-modal__btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.customer-progress-modal__btn--sms {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.customer-progress-modal__btn--sms:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.customer-progress-modal__btn--redeem {
+  background: white;
+  color: var(--purple);
+}
+
+.customer-progress-modal__btn--redeem:hover {
+  background: #f0f0f5;
+}
+
+.customer-progress-modal__btn--add {
+  background: var(--purple);
+  color: white;
+}
+
+.customer-progress-modal__btn--add:hover {
+  background: var(--purple-hover);
+}
+
+@media (max-width: 520px) {
+  .customer-progress-modal__header,
+  .customer-progress-modal__body,
+  .customer-progress-modal__footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .customer-progress-modal__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 0;
+  }
+
+  .customer-progress-modal__value {
+    text-align: left;
+  }
+
+  .customer-progress-modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 16px;
+  }
+
+  .customer-progress-modal__footer-right {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .customer-progress-modal__footer-right .customer-progress-modal__btn,
+  .customer-progress-modal__btn {
+    width: 100%;
+    min-height: 44px;
+    flex: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .customer-progress-modal {
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
