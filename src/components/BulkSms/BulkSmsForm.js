@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { getSmsSenderId } from '../../config/app';
 import { getSmsErrorMessage, sendSms } from '../../services/smsApi';
 import { parsePhoneNumbers } from '../../utils/phoneNumbers';
 import { showError, showSuccess } from '../../utils/sweetAlert';
 import './BulkSmsForm.css';
+
+const DEFAULT_MESSAGE = 'Hi! Show this message at checkout for 10% off today only.';
 
 function estimateSmsParts(length) {
   if (length === 0) return 0;
@@ -12,9 +13,9 @@ function estimateSmsParts(length) {
 }
 
 function BulkSmsForm() {
-  const [senderId, setSenderId] = useState(() => getSmsSenderId());
+  const [senderId, setSenderId] = useState('NILETEE');
   const [phoneNumbers, setPhoneNumbers] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [isSending, setIsSending] = useState(false);
 
   const charCount = message.length;
@@ -70,7 +71,7 @@ function BulkSmsForm() {
             required
           />
           <span className="bulk-sms-form__hint">
-            This name appears as the message sender.
+            This name appears as the message sender (e.g. NILETEE).
           </span>
         </div>
 
@@ -80,7 +81,7 @@ function BulkSmsForm() {
             id="phone-numbers"
             className="bulk-sms-form__textarea--phones"
             rows={3}
-            placeholder="Enter phone numbers separated by commas or new lines"
+            placeholder="0625313162, 0656121885 (comma, semicolon, or one per line)"
             value={phoneNumbers}
             onChange={(e) => setPhoneNumbers(e.target.value)}
             disabled={isSending}

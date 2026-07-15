@@ -1,5 +1,9 @@
 import { login, getAuthErrorMessage } from './authApi';
 
+import { DEFAULT_API_BASE_URL } from '../config/api';
+
+const LIVE_API_BASE = DEFAULT_API_BASE_URL;
+
 describe('authApi', () => {
   beforeEach(() => {
     global.fetch = jest.fn();
@@ -19,7 +23,7 @@ describe('authApi', () => {
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      '/api/login',
+      `${LIVE_API_BASE}/api/login`,
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ email: 'admin@admin.com', password: 'admin' }),

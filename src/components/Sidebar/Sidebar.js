@@ -1,13 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../../data/navItems';
-import { getDisplayName, getUserInitial } from '../../utils/userDisplay';
 import { LogoIcon, LogoutIcon, NavIcon } from '../icons/Icons';
 import './Sidebar.css';
 
 function Sidebar({ session, onLogout }) {
-  const displayName = getDisplayName(session);
-  const userInitial = getUserInitial(session?.name, session?.email);
-
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
@@ -47,13 +43,11 @@ function Sidebar({ session, onLogout }) {
       <div className="sidebar__footer">
         <div className="sidebar__user">
           <span className="sidebar__user-avatar">
-            {userInitial}
+            {session?.name?.charAt(0)?.toUpperCase() || 'A'}
           </span>
           <div className="sidebar__user-info">
-            <span className="sidebar__user-name">{displayName}</span>
-            {session?.email ? (
-              <span className="sidebar__user-email">{session.email}</span>
-            ) : null}
+            <span className="sidebar__user-name">{session?.name || 'Admin'}</span>
+            <span className="sidebar__user-email">{session?.email}</span>
           </div>
         </div>
         <button

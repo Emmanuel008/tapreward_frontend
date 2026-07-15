@@ -7,7 +7,7 @@ function DashboardLayout({ session, onLogout }) {
     <div className="dashboard">
       <Sidebar session={session} onLogout={onLogout} />
       <main className="dashboard__content">
-        <Outlet context={{ session }} />
+        <Outlet />
       </main>
     </div>
   );

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import { dashboardStatConfig } from '../../data/navItems';
 import {
   fetchDashboardStats,
@@ -15,7 +14,6 @@ function formatStatValue(value) {
 }
 
 function DashboardPage({ searchQuery, onSearchChange }) {
-  const { session } = useOutletContext();
   const [stats, setStats] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -57,7 +55,6 @@ function DashboardPage({ searchQuery, onSearchChange }) {
         subtitle="Overview for customer"
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
-        session={session}
       />
 
       {isLoading ? (

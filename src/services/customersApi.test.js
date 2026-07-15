@@ -6,6 +6,10 @@ import {
   redeemCustomer,
 } from './customersApi';
 
+import { DEFAULT_API_BASE_URL } from '../config/api';
+
+const LIVE_API_BASE = DEFAULT_API_BASE_URL;
+
 describe('customersApi', () => {
   beforeEach(() => {
     global.fetch = jest.fn();
@@ -23,7 +27,7 @@ describe('customersApi', () => {
 
     const customers = await fetchCustomers();
 
-    expect(fetch).toHaveBeenCalledWith('/api/customers');
+    expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers`);
     expect(customers).toHaveLength(1);
     expect(customers[0].name).toBe('Jane Doe');
   });
@@ -45,7 +49,7 @@ describe('customersApi', () => {
     });
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/customers',
+      `${LIVE_API_BASE}/api/customers`,
       expect.objectContaining({ method: 'POST' })
     );
     expect(created.name).toBe('Jane Doe');
@@ -59,7 +63,7 @@ describe('customersApi', () => {
 
     await deleteCustomer('1');
 
-    expect(fetch).toHaveBeenCalledWith('/api/customers/1', { method: 'DELETE' });
+    expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers/1`, { method: 'DELETE' });
   });
 
   test('addPurchase calls purchase endpoint', async () => {
@@ -73,7 +77,7 @@ describe('customersApi', () => {
 
     const updated = await addPurchase('1');
 
-    expect(fetch).toHaveBeenCalledWith('/api/customers/1/purchase', { method: 'POST' });
+    expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers/1/purchase`, { method: 'POST' });
     expect(updated.purchase).toBe(2);
   });
 
@@ -88,7 +92,7 @@ describe('customersApi', () => {
 
     const updated = await redeemCustomer('1');
 
-    expect(fetch).toHaveBeenCalledWith('/api/customers/1/redeem', { method: 'POST' });
+    expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers/1/redeem`, { method: 'POST' });
     expect(updated.loyaltyHistory).toBe(1);
   });
 });
