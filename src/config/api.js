@@ -1,10 +1,10 @@
-export const DEFAULT_API_BASE_URL = 'http://tap.jitihada.co.tz';
+export const DEFAULT_API_BASE_URL = 'https://tap.jitihada.co.tz';
 
 /**
  * API base URL rules:
- * - Development: empty string → CRA proxy (package.json) forwards /api/* to live server
+ * - Development: empty string → CRA proxy forwards /api/* to live server
  * - Production + REACT_APP_USE_SAME_ORIGIN=true: empty → /api/* on current host
- * - Production + REACT_APP_API_URL set: use that URL (required when frontend/API differ)
+ * - REACT_APP_API_URL set: use that URL
  * - Production fallback: DEFAULT_API_BASE_URL
  */
 export function getApiBaseUrl() {
