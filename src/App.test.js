@@ -76,6 +76,7 @@ function renderApp(initialRoute = '/') {
 
 async function signIn() {
   renderApp('/');
+  await userEvent.type(screen.getByLabelText('Email'), 'admin@admin.com');
   await userEvent.type(screen.getByLabelText('Password'), 'admin');
   await userEvent.click(screen.getByRole('button', { name: 'Sign in' }));
   await waitFor(() => {

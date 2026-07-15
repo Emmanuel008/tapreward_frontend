@@ -10,10 +10,10 @@ export function getSession() {
 }
 
 export function saveSession({ email, name }) {
-  const trimmedEmail = email.trim() || 'admin@admin.com';
+  const trimmedEmail = (email || '').trim();
   const session = {
     email: trimmedEmail,
-    name: name || trimmedEmail.split('@')[0] || 'Admin',
+    name: (name || '').trim() || (trimmedEmail ? trimmedEmail.split('@')[0] : ''),
   };
 
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));

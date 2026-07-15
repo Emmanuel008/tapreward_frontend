@@ -1,15 +1,21 @@
-const LOGIN_URL = process.env.REACT_APP_API_URL
-  ? `${process.env.REACT_APP_API_URL}/api/login`
-  : '/api/login';
+import { apiUrl } from '../config/api';
 
 export async function login(email, password) {
-  const response = await fetch(LOGIN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  });
+  let response;
+
+  try {
+    response = await fetch(apiUrl('/api/login'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch (error) {
+    throw new Error(
+      'Could not reach the server. Check your connection or try again shortly.'
+    );
+  }
 
   const data = await response.json().catch(() => ({}));
 

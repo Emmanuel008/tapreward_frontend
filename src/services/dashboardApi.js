@@ -1,4 +1,4 @@
-const DASHBOARD_STATS_URL = `${process.env.REACT_APP_API_URL || ''}/api/dashboard/stats`;
+import { apiUrl } from '../config/api';
 
 async function parseResponse(response) {
   const data = await response.json().catch(() => ({}));
@@ -11,7 +11,7 @@ async function parseResponse(response) {
 }
 
 export async function fetchDashboardStats() {
-  const data = await parseResponse(await fetch(DASHBOARD_STATS_URL));
+  const data = await parseResponse(await fetch(apiUrl('/api/dashboard/stats')));
   return data.stats ?? {
     customers: 0,
     redeemedCards: 0,

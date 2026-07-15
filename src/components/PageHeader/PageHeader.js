@@ -1,7 +1,11 @@
 import { SearchIcon } from '../icons/Icons';
+import { getDisplayName, getUserInitial } from '../../utils/userDisplay';
 import './PageHeader.css';
 
-function PageHeader({ title, subtitle, searchQuery, onSearchChange, onAddClick }) {
+function PageHeader({ title, subtitle, searchQuery, onSearchChange, onAddClick, session }) {
+  const displayName = getDisplayName(session);
+  const userInitial = getUserInitial(session?.name, session?.email);
+
   return (
     <header className="page-header">
       <div className="page-header__title">
@@ -25,8 +29,8 @@ function PageHeader({ title, subtitle, searchQuery, onSearchChange, onAddClick }
             aria-label="Search User"
           />
         </div>
-        <div className="page-header__avatar" aria-label="User profile">
-          A
+        <div className="page-header__avatar" aria-label={`${displayName} profile`}>
+          {userInitial}
         </div>
       </div>
     </header>

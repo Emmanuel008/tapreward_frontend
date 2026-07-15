@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { getSmsDefaultMessage, getSmsSenderId } from '../../config/app';
 import {
   addPurchase,
   createCustomer,
@@ -16,11 +18,10 @@ import AddCustomerModal from './AddCustomerModal';
 import CustomerProgressModal from './CustomerProgressModal';
 import PurchasersTable from './PurchasersTable';
 
-const DEFAULT_SENDER_ID = 'NILETEE';
-const DEFAULT_SMS_MESSAGE = 'Hi! Thank you for being a loyal TapReward customer.';
 const PAGE_SIZE = 10;
 
 function PurchasersPage({ searchQuery, onSearchChange }) {
+  const { session } = useOutletContext();
   const [purchasers, setPurchasers] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [viewPurchaser, setViewPurchaser] = useState(null);
@@ -135,11 +136,22 @@ function PurchasersPage({ searchQuery, onSearchChange }) {
   };
 
   const handleSendSms = async (purchaser) => {
+    const senderId = getSmsSenderId();
+    const message = getSmsDefaultMessage();
+
+    if (!senderId || !message) {
+      showError(
+        'SMS not configured',
+        'Set REACT_APP_SMS_SENDER_ID and REACT_APP_SMS_DEFAULT_MESSAGE in your environment.'
+      );
+      return;
+    }
+
     try {
       await sendSms({
-        senderId: DEFAULT_SENDER_ID,
+        senderId,
         phoneNumbers: [normalizePhone(purchaser.phone)],
-        message: DEFAULT_SMS_MESSAGE,
+        message,
       });
       showSuccess('SMS sent', `Message sent to ${purchaser.name}.`);
     } catch (error) {
@@ -155,6 +167,7 @@ function PurchasersPage({ searchQuery, onSearchChange }) {
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
         onAddClick={() => setShowAddModal(true)}
+        session={session}
       />
       {isLoading ? (
         <p className="purchasers-page__loading">Loading customers...</p>

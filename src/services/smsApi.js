@@ -1,9 +1,13 @@
 import axios from 'axios';
-
-const SMS_API_URL =
-  process.env.REACT_APP_SMS_API_URL || 'https://wifi.jitihada.co.tz/api/send-sms';
+import { getSmsApiUrl } from '../config/app';
 
 export async function sendSms({ senderId, phoneNumbers, message }) {
+  const smsApiUrl = getSmsApiUrl();
+
+  if (!smsApiUrl) {
+    throw new Error('SMS API URL is not configured.');
+  }
+
   const contacts = (Array.isArray(phoneNumbers) ? phoneNumbers : [phoneNumbers])
     .map(String)
     .filter(Boolean)
@@ -15,7 +19,7 @@ export async function sendSms({ senderId, phoneNumbers, message }) {
     message,
   };
 
-  const response = await axios.post(SMS_API_URL, payload, {
+  const response = await axios.post(smsApiUrl, payload, {
     headers: {
       'Content-Type': 'application/json',
     },

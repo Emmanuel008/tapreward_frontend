@@ -1,4 +1,4 @@
-const CUSTOMERS_URL = `${process.env.REACT_APP_API_URL || ''}/api/customers`;
+import { apiUrl } from '../config/api';
 
 async function parseResponse(response) {
   const data = await response.json().catch(() => ({}));
@@ -11,13 +11,13 @@ async function parseResponse(response) {
 }
 
 export async function fetchCustomers() {
-  const data = await parseResponse(await fetch(CUSTOMERS_URL));
+  const data = await parseResponse(await fetch(apiUrl('/api/customers')));
   return data.customers ?? [];
 }
 
 export async function createCustomer(customer) {
   const data = await parseResponse(
-    await fetch(CUSTOMERS_URL, {
+    await fetch(apiUrl('/api/customers'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export async function createCustomer(customer) {
 
 export async function deleteCustomer(id) {
   await parseResponse(
-    await fetch(`${CUSTOMERS_URL}/${id}`, {
+    await fetch(apiUrl(`/api/customers/${id}`), {
       method: 'DELETE',
     })
   );
@@ -39,7 +39,7 @@ export async function deleteCustomer(id) {
 
 export async function addPurchase(id) {
   const data = await parseResponse(
-    await fetch(`${CUSTOMERS_URL}/${id}/purchase`, {
+    await fetch(apiUrl(`/api/customers/${id}/purchase`), {
       method: 'POST',
     })
   );
@@ -49,7 +49,7 @@ export async function addPurchase(id) {
 
 export async function redeemCustomer(id) {
   const data = await parseResponse(
-    await fetch(`${CUSTOMERS_URL}/${id}/redeem`, {
+    await fetch(apiUrl(`/api/customers/${id}/redeem`), {
       method: 'POST',
     })
   );

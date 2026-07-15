@@ -5,7 +5,7 @@ import { LogoIcon } from '../icons/Icons';
 import './LoginPage.css';
 
 function LoginPage({ onLoginSuccess }) {
-  const [email, setEmail] = useState('admin@admin.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isSubmittingRef = useRef(false);
@@ -47,7 +47,7 @@ function LoginPage({ onLoginSuccess }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@admin.com"
+              placeholder="Enter your email"
               autoComplete="email"
               required
               disabled={isSubmitting}

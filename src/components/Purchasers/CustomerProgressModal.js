@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getSmsDefaultMessage, getSmsSenderId } from '../../config/app';
 import { CloseIcon, PersonIcon } from '../icons/Icons';
 import { getSmsErrorMessage, sendSms } from '../../services/smsApi';
 import { normalizePhone } from '../../utils/phoneNumbers';
@@ -6,8 +7,6 @@ import { showError, showSuccess } from '../../utils/sweetAlert';
 import './CustomerProgressModal.css';
 
 const TOTAL_STAMPS = 5;
-const DEFAULT_SENDER_ID = 'NILETEE';
-const DEFAULT_SMS_MESSAGE = 'Hi! Thank you for being a loyal TapReward customer.';
 
 function formatPhone(phone) {
   const trimmed = phone.trim();
@@ -50,13 +49,24 @@ function CustomerProgressModal({
   };
 
   const handleSendSms = async () => {
+    const senderId = getSmsSenderId();
+    const message = getSmsDefaultMessage();
+
+    if (!senderId || !message) {
+      showError(
+        'SMS not configured',
+        'Set REACT_APP_SMS_SENDER_ID and REACT_APP_SMS_DEFAULT_MESSAGE in your environment.'
+      );
+      return;
+    }
+
     setIsSending(true);
 
     try {
       await sendSms({
-        senderId: DEFAULT_SENDER_ID,
+        senderId,
         phoneNumbers: [normalizePhone(purchaser.phone)],
-        message: DEFAULT_SMS_MESSAGE,
+        message,
       });
       showSuccess('SMS sent', 'Message sent successfully.');
     } catch (error) {

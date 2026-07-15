@@ -1,7 +1,11 @@
 import { SearchIcon } from '../icons/Icons';
+import { getDisplayName, getUserInitial } from '../../utils/userDisplay';
 import './BulkSmsHeader.css';
 
-function BulkSmsHeader() {
+function BulkSmsHeader({ session }) {
+  const displayName = getDisplayName(session);
+  const userInitial = getUserInitial(session?.name, session?.email);
+
   return (
     <header className="bulk-sms-header">
       <div className="bulk-sms-header__title">
@@ -16,11 +20,13 @@ function BulkSmsHeader() {
 
         <div className="bulk-sms-header__profile">
           <div className="bulk-sms-header__avatar" aria-hidden="true">
-            A
+            {userInitial}
           </div>
           <div className="bulk-sms-header__profile-info">
-            <span className="bulk-sms-header__profile-name">Admin</span>
-            <span className="bulk-sms-header__profile-email">admin@admin.com</span>
+            <span className="bulk-sms-header__profile-name">{displayName}</span>
+            {session?.email ? (
+              <span className="bulk-sms-header__profile-email">{session.email}</span>
+            ) : null}
           </div>
         </div>
       </div>
