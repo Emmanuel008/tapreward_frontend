@@ -5,6 +5,10 @@
   overflow: visible;
 }
 
+.purchasers-table__scroll {
+  overflow: visible;
+}
+
 .purchasers-table {
   width: 100%;
   border-collapse: collapse;
@@ -121,16 +125,17 @@
 }
 
 .purchasers-table__dropdown {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 4px);
   min-width: 148px;
   background: var(--dropdown-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  z-index: 20;
   overflow: hidden;
+}
+
+.purchasers-table__dropdown--portal {
+  position: fixed;
+  z-index: 10000;
 }
 
 .purchasers-table__dropdown-item {
@@ -163,9 +168,12 @@
 }
 
 @media (max-width: 900px) {
-  .purchasers-table__wrapper {
+  .purchasers-table__scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .purchasers-table__wrapper {
     border-radius: var(--radius-md);
   }
 

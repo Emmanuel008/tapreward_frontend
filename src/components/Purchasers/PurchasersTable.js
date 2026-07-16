@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { MoreIcon } from '../icons/Icons';
 import './PurchasersTable.css';
 
@@ -21,15 +22,52 @@ function PurchasersTable({
   onSendSms,
 }) {
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
   const menuRef = useRef(null);
+  const menuButtonRefs = useRef({});
+
+  const openPurchaser = purchasers.find((purchaser) => purchaser.id === openMenuId);
+
+  const updateMenuPosition = useCallback(() => {
+    if (!openMenuId) return;
+
+    const button = menuButtonRefs.current[openMenuId];
+    if (!button) return;
+
+    const rect = button.getBoundingClientRect();
+    setMenuPosition({
+      top: rect.bottom + 4,
+      right: window.innerWidth - rect.right,
+    });
+  }, [openMenuId]);
+
+  useLayoutEffect(() => {
+    if (!openMenuId) {
+      setMenuPosition(null);
+      return undefined;
+    }
+
+    updateMenuPosition();
+
+    window.addEventListener('resize', updateMenuPosition);
+    window.addEventListener('scroll', updateMenuPosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updateMenuPosition);
+      window.removeEventListener('scroll', updateMenuPosition, true);
+    };
+  }, [openMenuId, updateMenuPosition]);
 
   useEffect(() => {
     if (!openMenuId) return undefined;
 
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpenMenuId(null);
-      }
+    const handleClickOutside = (event) => {
+      const button = menuButtonRefs.current[openMenuId];
+
+      if (menuRef.current?.contains(event.target)) return;
+      if (button?.contains(event.target)) return;
+
+      setOpenMenuId(null);
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -57,74 +95,90 @@ function PurchasersTable({
     onPageChange?.(page);
   };
 
+  const menuPortal =
+    openMenuId &&
+    openPurchaser &&
+    menuPosition &&
+    createPortal(
+      <div
+        ref={menuRef}
+        className="purchasers-table__dropdown purchasers-table__dropdown--portal"
+        role="menu"
+        style={{
+          top: menuPosition.top,
+          right: menuPosition.right,
+        }}
+      >
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            role="menuitem"
+            className={
+              item.destructive
+                ? 'purchasers-table__dropdown-item purchasers-table__dropdown-item--delete'
+                : 'purchasers-table__dropdown-item'
+            }
+            onClick={() => handleMenuAction(item.id, openPurchaser)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>,
+      document.body
+    );
+
   return (
     <div className="purchasers-table__wrapper">
-      <table className="purchasers-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Gender</th>
-            <th>Purchase</th>
-            <th>Till Bonas</th>
-            <th aria-label="Actions" />
-          </tr>
-        </thead>
-        <tbody>
-          {purchasers.map((purchaser) => (
-            <tr key={purchaser.id}>
-              <td>
-                <div className="purchasers-table__name-cell">
-                  <span className="purchasers-table__avatar" aria-hidden="true" />
-                  <span>{purchaser.name}</span>
-                </div>
-              </td>
-              <td>{purchaser.phone}</td>
-              <td>{purchaser.gender}</td>
-              <td>{purchaser.purchase}</td>
-              <td>{(purchaser.tillBonas ?? 0).toLocaleString()}</td>
-              <td>
-                <div
-                  className="purchasers-table__actions"
-                  ref={openMenuId === purchaser.id ? menuRef : null}
-                >
-                  <button
-                    type="button"
-                    className="purchasers-table__menu-btn"
-                    aria-label={`Actions for ${purchaser.name}`}
-                    aria-expanded={openMenuId === purchaser.id}
-                    onClick={() =>
-                      setOpenMenuId(openMenuId === purchaser.id ? null : purchaser.id)
-                    }
-                  >
-                    <MoreIcon />
-                  </button>
-
-                  {openMenuId === purchaser.id && (
-                    <div className="purchasers-table__dropdown" role="menu">
-                      {menuItems.map((item) => (
-                        <button
-                          key={item.id}
-                          type="button"
-                          role="menuitem"
-                          className={
-                            item.destructive
-                              ? 'purchasers-table__dropdown-item purchasers-table__dropdown-item--delete'
-                              : 'purchasers-table__dropdown-item'
-                          }
-                          onClick={() => handleMenuAction(item.id, purchaser)}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </td>
+      <div className="purchasers-table__scroll">
+        <table className="purchasers-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Gender</th>
+              <th>Purchase</th>
+              <th>Till Bonas</th>
+              <th aria-label="Actions" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {purchasers.map((purchaser) => (
+              <tr key={purchaser.id}>
+                <td>
+                  <div className="purchasers-table__name-cell">
+                    <span className="purchasers-table__avatar" aria-hidden="true" />
+                    <span>{purchaser.name}</span>
+                  </div>
+                </td>
+                <td>{purchaser.phone}</td>
+                <td>{purchaser.gender}</td>
+                <td>{purchaser.purchase}</td>
+                <td>{(purchaser.tillBonas ?? 0).toLocaleString()}</td>
+                <td>
+                  <div className="purchasers-table__actions">
+                    <button
+                      type="button"
+                      ref={(element) => {
+                        menuButtonRefs.current[purchaser.id] = element;
+                      }}
+                      className="purchasers-table__menu-btn"
+                      aria-label={`Actions for ${purchaser.name}`}
+                      aria-expanded={openMenuId === purchaser.id}
+                      aria-haspopup="menu"
+                      onClick={() =>
+                        setOpenMenuId(openMenuId === purchaser.id ? null : purchaser.id)
+                      }
+                    >
+                      <MoreIcon />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {totalItems > 0 && (
         <div className="purchasers-table__pagination">
@@ -158,6 +212,8 @@ function PurchasersTable({
           )}
         </div>
       )}
+
+      {menuPortal}
     </div>
   );
 }
