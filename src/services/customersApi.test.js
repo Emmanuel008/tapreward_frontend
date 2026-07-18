@@ -52,7 +52,7 @@ describe('customersApi', () => {
       `${LIVE_API_BASE}/api/customers`,
       expect.objectContaining({ method: 'POST' })
     );
-    expect(created.name).toBe('Jane Doe');
+    expect(created.customer.name).toBe('Jane Doe');
   });
 
   test('deleteCustomer calls delete endpoint', async () => {
@@ -75,10 +75,16 @@ describe('customersApi', () => {
       }),
     });
 
-    const updated = await addPurchase('1');
+    const updated = await addPurchase('1', 2);
 
-    expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers/1/purchase`, { method: 'POST' });
-    expect(updated.purchase).toBe(2);
+    expect(fetch).toHaveBeenCalledWith(
+      `${LIVE_API_BASE}/api/customers/1/purchase`,
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ cups: 2 }),
+      })
+    );
+    expect(updated.customer.purchase).toBe(2);
   });
 
   test('redeemCustomer calls redeem endpoint', async () => {
@@ -93,6 +99,6 @@ describe('customersApi', () => {
     const updated = await redeemCustomer('1');
 
     expect(fetch).toHaveBeenCalledWith(`${LIVE_API_BASE}/api/customers/1/redeem`, { method: 'POST' });
-    expect(updated.loyaltyHistory).toBe(1);
+    expect(updated.customer.loyaltyHistory).toBe(1);
   });
 });

@@ -94,6 +94,42 @@
   text-align: right;
 }
 
+.customer-progress-modal__row--cups {
+  align-items: flex-start;
+}
+
+.customer-progress-modal__cup-input-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.customer-progress-modal__cup-input {
+  width: 88px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 14px;
+  text-align: center;
+}
+
+.customer-progress-modal__cup-input:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+.customer-progress-modal__cup-hint {
+  max-width: 220px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
 .customer-progress-modal__stamps {
   display: flex;
   align-items: center;
@@ -205,6 +241,15 @@
   }
 
   .customer-progress-modal__value {
+    text-align: left;
+  }
+
+  .customer-progress-modal__cup-input-wrap {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .customer-progress-modal__cup-hint {
     text-align: left;
   }
 

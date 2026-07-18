@@ -26,7 +26,10 @@ export async function createCustomer(customer) {
     })
   );
 
-  return data.customer;
+  return {
+    customer: data.customer,
+    sms: data.sms ?? null,
+  };
 }
 
 export async function deleteCustomer(id) {
@@ -37,14 +40,22 @@ export async function deleteCustomer(id) {
   );
 }
 
-export async function addPurchase(id) {
+export async function addPurchase(id, cups = 1) {
   const data = await parseResponse(
     await fetch(apiUrl(`/api/customers/${id}/purchase`), {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cups }),
     })
   );
 
-  return data.customer;
+  return {
+    customer: data.customer,
+    sms: data.sms ?? null,
+    cupsAdded: data.cupsAdded ?? cups,
+  };
 }
 
 export async function redeemCustomer(id) {
@@ -54,7 +65,10 @@ export async function redeemCustomer(id) {
     })
   );
 
-  return data.customer;
+  return {
+    customer: data.customer,
+    sms: data.sms ?? null,
+  };
 }
 
 export function getCustomersApiErrorMessage(error) {
@@ -63,4 +77,12 @@ export function getCustomersApiErrorMessage(error) {
   }
 
   return 'Something went wrong. Please try again.';
+}
+
+export function getSmsStatusMessage(sms) {
+  if (!sms || sms.sent) {
+    return null;
+  }
+
+  return sms.error || 'The automatic SMS could not be sent.';
 }

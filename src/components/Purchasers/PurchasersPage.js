@@ -5,6 +5,7 @@ import {
   deleteCustomer,
   fetchCustomers,
   getCustomersApiErrorMessage,
+  getSmsStatusMessage,
   redeemCustomer,
 } from '../../services/customersApi';
 import { getSmsErrorMessage, sendSms } from '../../services/smsApi';
@@ -80,21 +81,34 @@ function PurchasersPage({ searchQuery, onSearchChange }) {
 
   const handleAddCustomer = async (contact) => {
     try {
-      const created = await createCustomer(contact);
+      const { customer: created, sms } = await createCustomer(contact);
       setPurchasers((prev) => [created, ...prev]);
       setShowAddModal(false);
       showSuccess('Customer added', `${created.name} was added successfully.`);
+
+      const smsError = getSmsStatusMessage(sms);
+      if (smsError) {
+        showError('Welcome SMS not sent', smsError);
+      }
     } catch (error) {
       showError('Could not add customer', getCustomersApiErrorMessage(error));
     }
   };
 
-  const handleAddPurchase = async (id) => {
+  const handleAddPurchase = async (id, cups = 1) => {
     try {
-      const updated = await addPurchase(id);
+      const { customer: updated, sms, cupsAdded } = await addPurchase(id, cups);
       setPurchasers((prev) => prev.map((p) => (p.id === id ? updated : p)));
       setViewPurchaser(updated);
-      showSuccess('Purchase added', 'Loyalty progress updated.');
+      showSuccess(
+        'Purchase added',
+        `${cupsAdded} cup${cupsAdded === 1 ? '' : 's'} recorded. Loyalty progress updated.`
+      );
+
+      const smsError = getSmsStatusMessage(sms);
+      if (smsError) {
+        showError('Purchase SMS not sent', smsError);
+      }
     } catch (error) {
       showError('Could not add purchase', getCustomersApiErrorMessage(error));
     }
@@ -102,10 +116,15 @@ function PurchasersPage({ searchQuery, onSearchChange }) {
 
   const handleRedeem = async (id) => {
     try {
-      const updated = await redeemCustomer(id);
+      const { customer: updated, sms } = await redeemCustomer(id);
       setPurchasers((prev) => prev.map((p) => (p.id === id ? updated : p)));
       setViewPurchaser(updated);
       showSuccess('Reward redeemed', 'Loyalty history updated.');
+
+      const smsError = getSmsStatusMessage(sms);
+      if (smsError) {
+        showError('Redeem SMS not sent', smsError);
+      }
     } catch (error) {
       showError('Could not redeem', getCustomersApiErrorMessage(error));
     }

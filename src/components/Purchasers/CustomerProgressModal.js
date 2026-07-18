@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CloseIcon, PersonIcon } from '../icons/Icons';
+import { TOTAL_STAMPS, cupsUntilFreeCoffee } from '../../constants/loyalty';
 import { getSmsErrorMessage, sendSms } from '../../services/smsApi';
 import { normalizePhone } from '../../utils/phoneNumbers';
 import { showError, showSuccess } from '../../utils/sweetAlert';
 import './CustomerProgressModal.css';
 
-const TOTAL_STAMPS = 5;
 const DEFAULT_SENDER_ID = 'NILETEE';
 const DEFAULT_SMS_MESSAGE = 'Hi! Thank you for being a loyal TapReward customer.';
 
@@ -23,6 +23,13 @@ function CustomerProgressModal({
 }) {
   const [isSending, setIsSending] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [cupCount, setCupCount] = useState(1);
+
+  useEffect(() => {
+    if (isOpen) {
+      setCupCount(1);
+    }
+  }, [isOpen, purchaser?.id]);
 
   if (!isOpen || !purchaser) return null;
 
@@ -30,11 +37,23 @@ function CustomerProgressModal({
   const history = purchaser.loyaltyHistory ?? 0;
   const purchaseCount = purchaser.purchase ?? 0;
   const canRedeem = progress >= TOTAL_STAMPS;
+  const remainingAfterPurchase = cupsUntilFreeCoffee(progress + cupCount);
+
+  const handleCupCountChange = (event) => {
+    const nextValue = Number.parseInt(event.target.value, 10);
+    if (Number.isNaN(nextValue)) {
+      setCupCount(1);
+      return;
+    }
+
+    setCupCount(Math.max(1, Math.min(99, nextValue)));
+  };
 
   const handleAddPurchase = async () => {
     setIsUpdating(true);
     try {
-      await onAddPurchase(purchaser.id);
+      await onAddPurchase(purchaser.id, cupCount);
+      setCupCount(1);
     } finally {
       setIsUpdating(false);
     }
@@ -106,6 +125,29 @@ function CustomerProgressModal({
           <div className="customer-progress-modal__row">
             <span className="customer-progress-modal__label">Purchase Count</span>
             <span className="customer-progress-modal__value">{purchaseCount}</span>
+          </div>
+
+          <div className="customer-progress-modal__row customer-progress-modal__row--cups">
+            <label className="customer-progress-modal__label" htmlFor="cup-count-input">
+              Cups This Purchase
+            </label>
+            <div className="customer-progress-modal__cup-input-wrap">
+              <input
+                id="cup-count-input"
+                type="number"
+                min="1"
+                max="99"
+                value={cupCount}
+                onChange={handleCupCountChange}
+                className="customer-progress-modal__cup-input"
+                disabled={isUpdating || isSending}
+              />
+              <span className="customer-progress-modal__cup-hint">
+                {remainingAfterPurchase === 0
+                  ? 'Free coffee earned after this purchase'
+                  : `${remainingAfterPurchase} more cup${remainingAfterPurchase === 1 ? '' : 's'} until free coffee`}
+              </span>
+            </div>
           </div>
 
           <div className="customer-progress-modal__row">

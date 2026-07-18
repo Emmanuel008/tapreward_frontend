@@ -47,22 +47,37 @@ beforeEach(() => {
   });
   customersApi.fetchCustomers.mockResolvedValue([mockCustomer]);
   customersApi.createCustomer.mockResolvedValue({
-    id: '2',
-    name: 'John Smith',
-    phone: '255 711 222 333',
-    gender: 'Male',
-    email: 'john@example.com',
-    purchase: 0,
-    tillBonas: 0,
-    loyaltyProgress: 0,
-    loyaltyHistory: 0,
+    customer: {
+      id: '2',
+      name: 'John Smith',
+      phone: '255 711 222 333',
+      gender: 'Male',
+      email: 'john@example.com',
+      purchase: 0,
+      tillBonas: 0,
+      loyaltyProgress: 0,
+      loyaltyHistory: 0,
+    },
+    sms: { sent: true },
   });
   customersApi.deleteCustomer.mockResolvedValue(undefined);
-  customersApi.addPurchase.mockImplementation((id) =>
-    Promise.resolve({ ...mockCustomer, id, purchase: 1, loyaltyProgress: 1 })
+  customersApi.addPurchase.mockImplementation((id, cups = 1) =>
+    Promise.resolve({
+      customer: {
+        ...mockCustomer,
+        id,
+        purchase: cups,
+        loyaltyProgress: Math.min(5, cups),
+      },
+      sms: { sent: true },
+      cupsAdded: cups,
+    })
   );
   customersApi.redeemCustomer.mockImplementation((id) =>
-    Promise.resolve({ ...mockCustomer, id, loyaltyProgress: 0, loyaltyHistory: 1 })
+    Promise.resolve({
+      customer: { ...mockCustomer, id, loyaltyProgress: 0, loyaltyHistory: 1 },
+      sms: { sent: true },
+    })
   );
 });
 
